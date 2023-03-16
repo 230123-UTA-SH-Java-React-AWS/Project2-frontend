@@ -5,7 +5,7 @@ import './Game.css'
 
 
 const Game = () => {
-  const deck = [
+  let deck = [
     {rank: "Ace", suit: "Spades"},{rank: "2", suit: "Spades"},{rank: "3", suit: "Spades"},
     {rank: "4", suit: "Spades"},{rank: "5", suit: "Spades"},{rank: "6", suit: "Spades"},
     {rank: "7", suit: "Spades"},{rank: "8", suit: "Spades"},{rank: "9", suit: "Spades"},
@@ -25,6 +25,11 @@ const Game = () => {
     {rank: "10", suit: "Clubs"},{rank: "Jack", suit: "Clubs"},{rank: "Queen", suit: "Clubs"},{rank: "King", suit: "Clubs"}
   ];
   
+  deck = deck.map((card, index) => ({
+    ...card,
+    facingUp: true
+  }));
+
   const twoDecks = deck.concat(deck);
   const shuffledDeck = shuffle(twoDecks);
 
@@ -65,7 +70,6 @@ const Game = () => {
   };
   
   const calculateHand = (cards) => {
-    
 
     let count = 0;
     let hasAce = false;
@@ -90,8 +94,8 @@ const Game = () => {
     if (hasAce && count + 10 <= 21) {
       count += 10;
     }
-    console.log(count);
-    
+    // console.log(count);
+    console.log(playersCards);
     return count;
     
   }
@@ -99,13 +103,14 @@ const Game = () => {
   const drawCard = () => {
     const card = randomizedDeck.shift();
     const newPlayerCards = [...playersCards, card];
-    setPlayersCards(newPlayerCards);
+    setPlayersCards(newPlayerCards)
     // console.log(newPlayerCards);
     
-    setPlayerCount(calculateHand(newPlayerCards))
-    // console.log(playerCount)
-    
   };
+
+  useEffect(()=> {
+    setPlayerCount(calculateHand(playersCards))
+  }, [playersCards])
 
   useEffect(() => {
     if (playerCount > 21) {
@@ -113,14 +118,12 @@ const Game = () => {
     }
   }, [playerCount]);
 
-  
   const hit = () => {
     if (winner === "") { // check if the game is still in progress
         drawCard();
     }
   };
   
-
   const stand = () => {
     isDealersTurn(true);
   }
