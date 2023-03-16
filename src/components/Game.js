@@ -58,10 +58,15 @@ const Game = () => {
     setPlayersCards(newPlayersCards);
     setDealerCards(newDealerCards);
     setRandomizedDeck(randomizedDeck.slice(4));
+    
+    setPlayerCount(calculateHand(newPlayersCards));
+    setDealerCount(calculateHand(newDealerCards));
     setCardsDealt(true);
   };
   
   const calculateHand = (cards) => {
+    
+
     let count = 0;
     let hasAce = false;
   
@@ -85,8 +90,39 @@ const Game = () => {
     if (hasAce && count + 10 <= 21) {
       count += 10;
     }
-  
+    console.log(count);
+    
     return count;
+    
+  }
+
+  const drawCard = () => {
+    const card = randomizedDeck.shift();
+    const newPlayerCards = [...playersCards, card];
+    setPlayersCards(newPlayerCards);
+    // console.log(newPlayerCards);
+    
+    setPlayerCount(calculateHand(newPlayerCards))
+    // console.log(playerCount)
+    
+  };
+
+  useEffect(() => {
+    if (playerCount > 21) {
+      setWinner("You busted! Dealer wins.");
+    }
+  }, [playerCount]);
+
+  
+  const hit = () => {
+    if (winner === "") { // check if the game is still in progress
+        drawCard();
+    }
+  };
+  
+
+  const stand = () => {
+    isDealersTurn(true);
   }
   
   return (
@@ -130,6 +166,10 @@ const Game = () => {
         )}
       </div>
       {!cardsDealt && <button onClick={dealCards}>Deal</button>}
+      <div className="playerAction" >
+        {cardsDealt && <button onClick={hit} id="hitButton">Hit</button>}
+        {cardsDealt && !isDealersTurn && <button onClick={stand} id="hitButton">Stand</button>}
+      </div>
     </div>
   );
 };
