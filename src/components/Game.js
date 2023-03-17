@@ -46,6 +46,7 @@ const Game = () => {
   const [isHandComplete, setIsHandComplete] = useState(true);//if a winning event happens like blackjack or bust
   const [winner, setWinner] = useState("");
   const [cardsDealt, setCardsDealt] = useState(false);
+  const [message, setMessage] = useState("");
 
   const dealCards = () => {
     setIsDealersTurn(false);
@@ -91,10 +92,14 @@ const Game = () => {
       }
     }
   
-    if (hasAce && count + 10 <= 21) {
-      count += 10;
+    if(hasAce) {
+      if(count + 10 <= 21) {
+        count += 10;
+      } else {
+        count += 1;
+      }
     }
-    // console.log(count);
+    
     console.log(playersCards);
     return count;
     
@@ -104,7 +109,6 @@ const Game = () => {
     const card = randomizedDeck.shift();
     const newPlayerCards = [...playersCards, card];
     setPlayersCards(newPlayerCards)
-    // console.log(newPlayerCards);
     
   };
 
@@ -115,8 +119,13 @@ const Game = () => {
   useEffect(() => {
     if (playerCount > 21) {
       setWinner("You busted! Dealer wins.");
+      setIsPlayerBusted(true);
+      setIsHandComplete(true);
+      setMessage("Player Busted! dealer wins");
+      // playerBust();
     }
   }, [playerCount]);
+
 
   const hit = () => {
     if (winner === "") { // check if the game is still in progress
@@ -172,6 +181,9 @@ const Game = () => {
       <div className="playerAction" >
         {cardsDealt && <button onClick={hit} id="hitButton">Hit</button>}
         {cardsDealt && !isDealersTurn && <button onClick={stand} id="hitButton">Stand</button>}
+      </div>
+      <div className={isPlayerBusted ? "popup" : ""}>
+          {isPlayerBusted && <div>{message}</div>}
       </div>
     </div>
   );
