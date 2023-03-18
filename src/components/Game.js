@@ -74,14 +74,17 @@ const Game = () => {
 
     let count = 0;
     let hasAce = false;
+    let aceCount = 0;
   
     for (let i = 0; i < cards.length; i++) {
-      if (!cards[i].facingUp) continue;
-  
-      const rank = cards[i].rank;
+      const card = cards[i];
+      if (!card || !card.facingUp) continue; // skip undefined or face down cards
+
+      const rank = card.rank;
   
       if (rank === "Ace") {
         hasAce = true;
+        aceCount++
         continue;
       }
   
@@ -91,52 +94,94 @@ const Game = () => {
         count += parseInt(rank);
       }
     }
-  
-    if(hasAce) {
-      if(count + 10 <= 21) {
-        count += 10;
+    
+    // handle Aces separately
+    for (let i = 0; i < aceCount; i++) {
+      if (count + 11 <= 21 && i === aceCount - 1) {
+        // if this is the last Ace and adding 11 doesn't bust the hand, add 11
+        count += 11;
       } else {
         count += 1;
       }
     }
-    
-    console.log(playersCards);
-    return count;
-    
-  }
+      
+      console.log(playersCards);
+      return count;
+      
+    }
 
   const drawCard = () => {
     const card = randomizedDeck.shift();
     const newPlayerCards = [...playersCards, card];
-    setPlayersCards(newPlayerCards)
+    setPlayersCards(newPlayerCards);
     
   };
 
   useEffect(()=> {
-    setPlayerCount(calculateHand(playersCards))
+    setPlayerCount(calculateHand(playersCards));
   }, [playersCards])
 
   useEffect(() => {
     if (playerCount > 21) {
-      setWinner("You busted! Dealer wins.");
+      setWinner("Dealer");
+      setMessage("Player busted! Dealer wins.");
       setIsPlayerBusted(true);
       setIsHandComplete(true);
-      setMessage("Player Busted! dealer wins");
-      // playerBust();
     }
   }, [playerCount]);
 
 
   const hit = () => {
-    if (winner === "") { // check if the game is still in progress
-        drawCard();
+    if (!isDealersTurn && winner === "") { // check if it's the player's turn and the game is still in progress
+      drawCard();
     }
   };
   
-  const stand = () => {
-    isDealersTurn(true);
+  const stand = () => {  
+    const newDealerCards = dealerCards.map((card, index) => {
+      if(index === 0) {
+        return {
+          ...card,
+          facingUp: true,
+        };
+      }
+      return card;
+    });
+    setDealerCards(newDealerCards);
+
+    const newDealerCount = calculateHand(dealerCards);
+    setDealerCount(newDealerCount);
+    
+    setIsDealersTurn(true);
+    console.log("Now its the dealer turn!")
+    dealerTurn();
   }
+
+  const dealerTurn = () => {
+    if(dealerCount < 17) {
+      const card = randomizedDeck.shift()
+      card.facingUp = true;
+      const newDealerCards = [...dealerCards, card];
+      setDealerCards(newDealerCards);
+      setDealerCount(calculateHand(newDealerCards));
+       // update dealerCount with the new array
+    }
+  };
+
+  useEffect(()=> {
+    setDealerCount(calculateHand(dealerCards));
+    console.log(dealerCards);
+  }, [dealerCards])
+
+  useEffect(() => {
+    if (dealerCount > 21) {
+      setWinner("Player");
+      setMessage("Dealer busted! Player wins.");
+      setIsHandComplete(true);
+    }
+  }, [dealerCount]);
   
+
   return (
     <div className="gameBoard">
       <div className="dealerCards">
@@ -146,7 +191,7 @@ const Game = () => {
               {index === 0 && !isDealersTurn ? (
                 <card-t rank="0" backtext="BACK" />
               ) : (
-                <card-t rank={card.rank} suit={card.suit} />
+                card && <card-t rank={card.rank} suit={card.suit} />
               )}
             </div>
           ))}
@@ -180,10 +225,10 @@ const Game = () => {
       {!cardsDealt && <button onClick={dealCards}>Deal</button>}
       <div className="playerAction" >
         {cardsDealt && <button onClick={hit} id="hitButton">Hit</button>}
-        {cardsDealt && !isDealersTurn && <button onClick={stand} id="hitButton">Stand</button>}
+        {cardsDealt && <button onClick={stand} id="hitButton">Stand</button>}
       </div>
       <div className={isPlayerBusted ? "popup" : ""}>
-          {isPlayerBusted && <div>{message}</div>}
+        {winner !== "" && <div>{message}</div>}
       </div>
     </div>
   );
