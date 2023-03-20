@@ -56,6 +56,7 @@ const Login: React.FC = () => {
                         <Field type="password" name="password" required/>
                         <ErrorMessage name="password" component="div" className="error" /> 
                     </label>
+         
                     <button type="submit" className="login-button">Login</button>
                     <div>
                         <Link to="/Registration"> Don't have an account? Click here </Link>

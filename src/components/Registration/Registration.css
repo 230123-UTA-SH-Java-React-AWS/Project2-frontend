@@ -69,3 +69,23 @@ button:hover {
     background-position: 100% 0;
   }
 }
+
+/* For screen sizes smaller than 1024px (e.g. mobile devices on landscape mode) */
+
+@media only screen and (max-width: 1024px) and (orientation: landscape)
+{
+  .card {
+
+    background-color: #ffffff; 
+    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
+    padding: 20px; 
+    border-radius: 8px; 
+    width: 70vw;
+    height: 90vh; 
+    display: flex;
+    flex-direction: column;
+    justify-content: center; 
+    align-items: center;
+    
+  }
+}

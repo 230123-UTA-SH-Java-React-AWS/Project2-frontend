@@ -8,7 +8,8 @@ const Landing: React.FC = () => {
         <div className="background">
         <div className="landing-container">
         <div className="landing-card">
-            <h1> Welcome High Roller! Please either login or register below to start the fun!</h1>
+            <h1> Welcome High Roller!</h1>
+            <h2> Please either login or register below to start the fun! </h2>
             <ul>
             <Link to="/Registration" className="button-link">
               <button className="landing-button">Register</button>
