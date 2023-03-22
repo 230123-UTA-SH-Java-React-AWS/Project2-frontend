@@ -36,16 +36,17 @@ function CreateNewGameForm() {
         axios.post<string>(CREATEPATH, {}, requestConfig)
             .then((res) => {
                 console.log(res.data);
-                // navigate('/' + 'queue' + '/' + res.data);
+                navigate('/' + 'blackjack' + '/' + res.data);
                 const config: AxiosRequestConfig = {
                     baseURL: `http://${BASE_URL}:${GAME_PORT}`,
                     headers: {
-                        "gameId": res.data
+                        "gameId": res.data, 
+                        "Content-Type": "application/json"
                     }
                 };
-                axios.put<string>(JOINPATH, {}, config).then((res) => {
-                    navigate('/' + 'queue' + '/' + res.data);
-                });
+                // axios.put<string>(JOINPATH, {}, config).then((res) => {
+                //     navigate('/' + 'queue' + '/' + res.data);
+                // });
             })
             .catch((err) => console.log(err));
     }
