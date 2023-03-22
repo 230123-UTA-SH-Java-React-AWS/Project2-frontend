@@ -11,7 +11,7 @@ import axios, { AxiosRequestConfig } from 'axios';
 import { QueueState } from '../../model/QueueState';
 import { Client } from '@stomp/stompjs';
 import { Card52 } from '../../model/Card52';
-// import LoadScreen from './LoadScreen';
+import LoadScreen from '../LoadScreen/LoadScreen';
 
 let stompClient: Client = new Client({
   brokerURL: `ws://${BASE_URL}:${GAME_PORT}/ws`,
@@ -30,15 +30,12 @@ const Game = () => {
   const [playerList, setPlayerList] = useState<any>();
   const [dealersCards, setDealersCards] = useState<Card52[]>();
   const [queueState, setQueueState] = useState<QueueState>();
+  const [isHost, setHost] = useState<boolean>(false); // <--- Sheryl added this
 
   let { tableId } = useParams();
   //CONNORS STUFF ^^
 
-  // const [openGame, setOpenGame] = useState<boolean>(false);
-  // const setOpenGameToTrue = () => {
-  //   setOpenGame(true);
-  // };
-
+  
   const deck = [
     {rank: "Ace", suit: "Spades"},{rank: "2", suit: "Spades"},{rank: "3", suit: "Spades"},
     {rank: "4", suit: "Spades"},{rank: "5", suit: "Spades"},{rank: "6", suit: "Spades"},
@@ -238,6 +235,24 @@ const Game = () => {
           setPlayerId(res.data);
       })
       .catch( (err) => console.log(err));
+
+      // Sheryl's code
+      const hostConfig: AxiosRequestConfig = {
+        baseURL: `http://${BASE_URL}:${GAME_PORT}`,
+        headers: {
+            'gameId': tableId,
+            'playerId': playerId,
+            'Content-Type': 'application/json'
+        }
+    }
+
+    const HOSTPATH = "/amIHost"; 
+
+    axios.get<boolean>(HOSTPATH, hostConfig).then((res) => {
+      if (res.data == true) {
+        setHost(true);
+      }
+    }).catch((err) => console.log(err));
   }
 
   const handleStartGame = () => {
@@ -258,10 +273,7 @@ const Game = () => {
       .catch( (err) => console.log(err));
   }
   
-  // if (!openGame) {
-  //   return <LoadScreen setOpenGameToTrue={setOpenGameToTrue} />
-  // };
-
+ 
   return (
     <div className="gameBoard">
       <div className="dealerCards">
