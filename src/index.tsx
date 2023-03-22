@@ -9,7 +9,7 @@ import Landing from './components/Landing/Landing';
 import Registration from './components/Registration/Registration';
 import Login from './components/Login/Login';
 import CreateNewGameForm from './components/CreateNewGame/CreateGame';
-import DropdownMenu from './components/Start/TableList';
+import LoadScreen from './components/LoadScreen/LoadScreen';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -20,6 +20,7 @@ root.render(
       <Routes>
         <Route path="/App" element = {<App />} />
         <Route path="/blackjack/:tableId" element = {<Game/>}/>
+        <Route path="/queue/:tableId" element = {<LoadScreen/>}/>
         <Route path="/" element={<Landing />} />
         <Route path="/Registration" element={<Registration />} />
         <Route path="/Login" element={<Login />} />
