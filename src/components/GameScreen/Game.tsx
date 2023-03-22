@@ -11,7 +11,7 @@ import axios, { AxiosRequestConfig } from 'axios';
 import { QueueState } from '../../model/QueueState';
 import { Client } from '@stomp/stompjs';
 import { Card52 } from '../../model/Card52';
-import LoadScreen from './LoadScreen';
+// import LoadScreen from './LoadScreen';
 
 let stompClient: Client = new Client({
   brokerURL: `ws://${BASE_URL}:${GAME_PORT}/ws`,
@@ -34,10 +34,10 @@ const Game = () => {
   let { tableId } = useParams();
   //CONNORS STUFF ^^
 
-  const [openGame, setOpenGame] = useState<boolean>(false);
-  const setOpenGameToTrue = () => {
-    setOpenGame(true);
-  };
+  // const [openGame, setOpenGame] = useState<boolean>(false);
+  // const setOpenGameToTrue = () => {
+  //   setOpenGame(true);
+  // };
 
   const deck = [
     {rank: "Ace", suit: "Spades"},{rank: "2", suit: "Spades"},{rank: "3", suit: "Spades"},
@@ -258,9 +258,9 @@ const Game = () => {
       .catch( (err) => console.log(err));
   }
   
-  if (!openGame) {
-    return <LoadScreen setOpenGameToTrue={setOpenGameToTrue} />
-  };
+  // if (!openGame) {
+  //   return <LoadScreen setOpenGameToTrue={setOpenGameToTrue} />
+  // };
 
   return (
     <div className="gameBoard">
