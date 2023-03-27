@@ -90,6 +90,7 @@ const authSlice = createSlice({
       state.jwt = null;
       state.status = "idle";
       state.error = null;
+      state.isAuthenticated = false;
       localStorage.removeItem("jwt");
     },
   },
@@ -127,7 +128,9 @@ const authSlice = createSlice({
           state.username = action.payload.username;
           state.email = action.payload.email;
           state.jwt = action.payload.accessToken;
+          state.isAuthenticated = true;
           state.error = null;
+          localStorage.removeItem("jwt");
           localStorage.setItem("jwt", action.payload.accessToken);
         }
       })
@@ -148,6 +151,7 @@ const authSlice = createSlice({
           state.status = "succeeded";
           state.username = action.payload.username;
           state.email = action.payload.email;
+          state.isAuthenticated = true;
           state.jwt = action.payload.jwt;
           state.error = null;
         }

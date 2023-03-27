@@ -14,8 +14,12 @@ import { getJwt } from "./util/getJwt";
 export const Root = () => {
   const dispatch = useAppDispatch();
   const csrfToken = useAppSelector((state: RootState) => state.csrf.token);
+  const isAuth = useAppSelector(
+    (state: RootState) => state.auth.isAuthenticated
+  );
   const loggedIn = getJwt() != null;
   console.log(getJwt());
+  console.log(isAuth);
 
   useEffect(() => {
     if (!csrfToken) {
@@ -32,12 +36,27 @@ export const Root = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/App" element={loggedIn? <App /> : <Navigate replace to={"/Login"}/>}/>
-        <Route path='/blackjack/:tableId' element={loggedIn? <Game /> : <Navigate replace to={"/Login"}/>} />
+        <Route
+          path="/App"
+          element={isAuth ? <App /> : <Navigate replace to={"/Login"} />}
+        />
+        <Route
+          path="/blackjack/:tableId"
+          element={isAuth ? <Game /> : <Navigate replace to={"/Login"} />}
+        />
         <Route path="/" element={<Landing />} />
         <Route path="/Registration" element={<Registration />} />
         <Route path="/Login" element={<Login />} />
-        <Route path="/*" element={loggedIn? <Navigate replace to={"/App"}/> : <Navigate replace to={"/Login"}/>}/>
+        <Route
+          path="/*"
+          element={
+            isAuth ? (
+              <Navigate replace to={"/App"} />
+            ) : (
+              <Navigate replace to={"/Login"} />
+            )
+          }
+        />
       </Routes>
     </BrowserRouter>
   );
