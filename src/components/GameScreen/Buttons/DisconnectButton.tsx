@@ -1,3 +1,6 @@
+import { FaSignOutAlt } from "@react-icons/all-files/fa/FaSignOutAlt";
+import "./Button.css"
+
 interface ButtonProps {
     handleDisconnect: () => void
 }
@@ -5,7 +8,7 @@ interface ButtonProps {
 function DisconnectButton({handleDisconnect}:ButtonProps) {
     return (
         <>
-            <button className="disconnect-btn" onClick={handleDisconnect}>Disconnect</button>
+            <button className="disconnect-btn" onClick={handleDisconnect}>Disconnect <FaSignOutAlt/></button>
         </>
     )
 }
