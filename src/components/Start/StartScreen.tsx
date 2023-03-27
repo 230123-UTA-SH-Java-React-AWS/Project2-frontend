@@ -3,6 +3,9 @@ import TableList from "./TableList";
 import { useState } from "react";
 import CreateNewGameForm from "../CreateNewGame/CreateGame";
 import Modal from "react-modal";
+import { logoutUser } from "../../features/authSlice";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { useNavigate } from "react-router-dom";
 
 
 
@@ -15,9 +18,18 @@ function StartScreen() {
         setOpenModal(!openModal);
     }
 
+    const dispatch = useAppDispatch();
+    const navigate = useNavigate(); 
+
+    const logout = () => {
+        dispatch(logoutUser()); 
+        navigate("/login"); 
+    }
+
 
     return (
         <div className="bg">
+            <nav className="logout"><button id="logout-btn" onClick={logout}>Logout</button></nav>
             <div className="grid-container beans">
                 <div className="start-title grid-item">
                     <h1 className="start-h1">Live Tables</h1>
