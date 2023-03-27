@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 function LoadScreen(props: any) {
   const navigate = useNavigate();
 
+  // Allows users to leave the queue even while waiting
   const disconnect = () => {
     props.setIsConnected(false);
     leaveGame(props.tableId, props.playerId);

@@ -61,10 +61,6 @@ button:active {
   grid-column: 2 / span 1;
 }
 
-.modal {
-  z-index: 2;
-}
-
 #logout-btn {
   position: absolute;
   top: 5px;
