@@ -124,6 +124,12 @@ const Game = () => {
     }
   }, [])
 
+  useEffect(() => {
+    while(true){
+      setTimeout(()=>(requestGameState(tableId, playerId)),5000);
+    }
+  }, [])
+
   // If you're not the host and the game has not started yet, you will see loading screen
   if (!isHost && gameState == undefined) {
     return <LoadScreen setIsConnected={setIsConnected} tableId={tableId} playerId={playerId}/> }
