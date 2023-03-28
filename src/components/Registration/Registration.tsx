@@ -70,6 +70,7 @@ const Registration: React.FC = () => {
         console.log(res);
       } else {
         // successfully registered so navigate user to login
+        navigate("/login");
       }
       setSubmitting(false);
     } catch (error) {

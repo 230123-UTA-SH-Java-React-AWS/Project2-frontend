@@ -13,7 +13,7 @@ function Card({card, index}:CardProps) {
     }
     
     return (
-        <div style={{left: index*45 + "px"}} className="playing-card">
+        <div style={{left: index*2 + "vw"}} className="playing-card">
             <img src={getCardImage()} alt={card.suit + card.rank} />
         </div>
     )

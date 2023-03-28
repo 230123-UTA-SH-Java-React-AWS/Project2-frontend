@@ -46,3 +46,13 @@ img {
   font-family: 'Ewert';
   src: url(./fonts/Ewert-Regular.ttf);
 }
+
+@font-face {
+  font-family: 'Rowdies Bold';
+  src: url(./fonts/Rowdies-Bold.ttf);
+}
+
+@font-face {
+  font-family: 'Rowdies Regular';
+  src: url(./fonts/Rowdies-Regular.ttf);
+}

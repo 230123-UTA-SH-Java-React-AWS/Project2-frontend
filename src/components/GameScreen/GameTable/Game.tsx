@@ -128,6 +128,8 @@ const Game = () => {
 
   return (
     <div className='game-screen'>
+      {/* This is here purely to add styles to the edge of the table */}
+      <div className='table-edge'></div>
       <div className="gameBoard">
 
         <Dealer dealersCards={gameState?.dealersCards} dealerHandValue={gameState?.dealerHandValue}/>

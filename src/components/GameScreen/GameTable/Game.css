@@ -4,18 +4,49 @@
 	padding: 0;
 	width: 100vw;
 	height: 100vh;
+	background: linear-gradient(
+		to bottom,
+		#272727 80%,
+		#181818 100%
+	);
+	z-index: -2;
+	pointer-events: none;
+}
+
+.table-edge {
+	position: absolute;
+	height: 92vh;
+    width: 96vw;
+    background: conic-gradient(
+		at 50% -20%,
+		#27150b,
+		#4d3020,
+		#301d12
+	);
+    border-radius: 50vw;
+    border: .3vh solid rgb(87, 59, 27);
+    box-sizing: border-box;
+    left: 2vw;
+	top: 4vh;
+	z-index: -1;
 }
 
 .gameBoard {
-    height: calc(100vh - 80px);
-    width: calc(100vw - 80px);
-    background-color: green;
+    height: 88vh;
+    width: 94vw;
+	background-image: conic-gradient(
+		at 50% -20%,
+        #440101,
+        #91372b,
+        #440101
+    );
+	background-clip: border-box;
     border-radius: 50vw;
-    border: 10px solid rgb(27, 27, 27);
+    border: 1px solid #EC9A29;
     box-sizing: border-box;
-    margin: 40px auto;
+    margin: 6vh auto;
     display: grid;
-    grid-template-columns: auto auto auto;
+    grid-template-columns: 1fr 1fr 1fr;
 	grid-template-rows: 1fr 1fr;
     padding: 40px;
 }
@@ -23,10 +54,12 @@
 .game-button {
     display: inline-block;
 
-    color: white;
+    color: black;
     text-align: center;
     text-decoration: none;
 	font-size: 2vw;
+
+	font-family: 'Rowdies Regular';
     
     cursor: pointer;
 
@@ -35,10 +68,17 @@
     margin: 4px 2px;
     padding: 10px 20px;
     
-    border-radius: 5px;
-    border: 2px solid rgb(27, 27, 27);
-    
-    background-color: #13ade0;
+    background-color: #e4e4d6;
+
+	pointer-events: auto;
+}
+
+.game-button:hover{
+	background: linear-gradient(
+		to bottom,
+		#e4e4d6,
+		#c0c0b0
+	);
 }
 
 .dealer {
@@ -48,10 +88,10 @@
 	display: grid;
 	grid-template-columns: auto auto;
 
-	margin: 6vh auto;
+	margin: 0 auto;
 }
 
-/* ==========For Each Player================ */
+/* ========== For Each Player ================ */
 
 .player1 {
 	grid-column: 2;
@@ -60,98 +100,194 @@
 	display: grid;
 	grid-template-columns: auto auto;
 
-	margin: 6vh auto;
+	margin: 8vh auto 0;
+}
+
+.player1 .countBox {
+	color: rgba(255, 255, 255, .2);
+}
+
+.dealer .countBox {
+	color: rgba(255, 255, 255, .2);
 }
 
 .cardSection {
 	position: relative;
 	grid-column: 1;
 	width: 14vw;
+	height: 25vh;
+
+	-webkit-user-select: none; /* Safari */        
+	-moz-user-select: none; /* Firefox */
+	-ms-user-select: none; /* IE10+/Edge */
+	user-select: none; /* Standard */
 }
 
 .countContainer {
 	position: relative;
 	grid-column: 2;
-	width: 10vw;
+	width: 20vh;
+	
+	-webkit-user-select: none; /* Safari */        
+	-moz-user-select: none; /* Firefox */
+	-ms-user-select: none; /* IE10+/Edge */
+	user-select: none; /* Standard */
 }
 
 .countBox {
 	position: absolute;
 	right: 0;
 	
-	font-size: 24px;
-	color: #000000;
+	text-align: center;
+	font-size: 3vh;
+	font-family: 'Rowdies Regular';
+	color: rgba(255, 255, 255, .2);
 	
-	padding: 10px;
+	padding: 2vh;
 	
 	border-radius: 5px;
-	border: 1px solid #000000;
-
-	background-color: #ffffff;
+	border: 1px solid rgba(255, 255, 255, .2);
 }
 
 .countLabel {
-	font-weight: bold;
-	margin-bottom: 5px;
+	margin: 0 auto 1vh;
 }
 
 .countValue {
-	font-size: 32px;
+	font-size: 5vh;
 	font-weight: bold;
 }
 
-/* Specific Player Positioning */
+/* =============================== Specific Player Positioning ========================================= */
+
+/* ========================= bottom row ========================== */
+.player2, .player3 {
+	display: grid;
+	grid-template-rows: auto auto;
+	grid-template-columns: auto auto;
+	
+	margin: 0 auto;
+	
+	width: 22vw;
+
+	grid-row: 2;
+}
 
 .player2 {
 	/* bottom left */
 	grid-column: 1;
-	grid-row: 2;
-
-	transform: rotate(45deg);
-
-	display: grid;
-	grid-template-columns: auto auto;
-
-	margin: 6vh auto;
 }
 
 .player3 {
 	/* bottom right */
 	grid-column: 3;
-	grid-row: 2;
+}
 
-	transform: rotate(-45deg);
+.player2 > .countContainer {
+	grid-column: 2;
+	grid-row: 1;
+	height: 8vh;
+	width: 10vh;
+}
+
+.player3 > .countContainer {
+	grid-column: 1;
+	grid-row: 1;
+	height: 8vh;
+	width: 10vh;
+}
+
+.player2 > .cardSection {
+	grid-column: 1;
+	grid-row: 2;
+	transform: rotate(45deg);
+}
+
+.player3 > .cardSection {
+	grid-column: 2;
+	grid-row: 2;
+	transform: rotate(-45deg) translateY(-2vh) translateX(6vh);
+}
+
+.player2 > .countContainer > .countBox {
+	top: 0;
+	right: 0;
+	font-size: 2vh;
+	padding: 1vh 2vh;
+}
+
+.player3 > .countContainer > .countBox {
+	right: 0;
+	top: 0;
+	font-size: 2vh;
+	padding: 1vh 2vh;
+}
+
+.player2 > .countContainer > .countBox > .countValue, .player3 > .countContainer > .countBox > .countValue {
+	font-size: 2vh;
+	margin-bottom: 1vh;
+}
+
+/* ========================= top row ========================== */
+.player4, .player5 {
+	grid-row: 1;
 
 	display: grid;
 	grid-template-columns: auto auto;
 
-	margin: 6vh auto;
+	margin: 0 auto;
+
+	width: 22vw;
+}
+
+.player4 > .countContainer > .countBox > .countValue, .player5 > .countContainer > .countBox > .countValue {
+	font-size: 2vh;
+	margin-bottom: 1vh;
 }
 
 .player4 {
-	/* top left */
+	/* far left column */
 	grid-column: 1;
-	grid-row: 1;
-
-	transform: rotate(90deg);
-
-	display: grid;
-	grid-template-columns: auto auto;
-
-	margin: 6vh auto;
 }
 
 .player5 {
-	/* top right */
+	/* far right column */
 	grid-column: 3;
+}
+
+.player4 > .countContainer {
+	grid-column: 2;
+	height: 25vh;
+}
+
+.player5 > .countContainer {
+	grid-column: 1;
 	grid-row: 1;
+	height: 12vh;
+}
 
-	transform: rotate(-90deg);
+.player4 > .cardSection {
+	grid-column: 1;
+	transform: rotate(90deg) translateX(6vh);
+}
 
-	display: grid;
-	grid-template-columns: auto auto;
+.player5 > .cardSection {
+	grid-column: 2;
+	transform: rotate(-90deg) translateX(-6vh);
+}
 
-	margin: 6vh auto;
+.player4 > .countContainer > .countBox {
+	right: 0;
+	bottom: 0;
+	font-size: 2vh;
+	padding: 1vh 2vh;
+}
+
+.player5 > .countContainer > .countBox {
+	right: 0;
+	top: 0;
+	font-size: 2vh;
+	padding: 1vh 2vh;
 }
 
 /* ========== At The Bottom of the Page ================ */
@@ -166,16 +302,21 @@
 	left: 0;
 	right: 0;
 	margin: 0 auto;
+
+	-webkit-user-select: none; /* Safari */        
+	-moz-user-select: none; /* Firefox */
+	-ms-user-select: none; /* IE10+/Edge */
+	user-select: none; /* Standard */
 }
 
 .disconnect {
 	position: absolute;
 	width: fit-content;
-	bottom: 2vh;
-	right: 4vw;
+	top: 0;
+	right: 2vw;
 }
 
-/* ============= The Start Game Button ============== */
+/* ============= The Start Game Button / Message ============== */
 
 .start-game {
 	position: relative;
@@ -190,4 +331,33 @@
 	right: 0;
 	margin: 0 auto;
 	width: fit-content;
+}
+
+.start-message {
+	position: absolute;
+	bottom: -4vh;
+	left: 0;
+	right: 0;
+	margin: 0 auto;
+	width: 40vh;
+	white-space: nowrap;
+}
+
+.start-message > h1 {
+	font-family: 'Rowdies Regular';
+	font-weight: 100;
+	font-size: 3vh;
+	color: rgba(255, 255, 255, .2);
+	width: 36.5vh;
+	overflow: hidden;
+	animation: loading-ellipses 3s steps(4, end) infinite forwards;
+}
+
+@keyframes loading-ellipses {
+	0% {
+		width: 36.5vh;
+	}
+	100% {
+		width: 40vh;
+	}
 }
