@@ -185,6 +185,7 @@ export const leaveGame = (tableId: string | undefined, playerId: string) => {
 
 // DOCUMENTATION NEEDED
 export const requestGameState = (tableId: string | undefined, playerId: string) => {
+    const jwt = getJwt();
     const requestConfig: AxiosRequestConfig = {
         baseURL: `http://${BASE_URL}:${GAME_PORT}`,
         headers: {
