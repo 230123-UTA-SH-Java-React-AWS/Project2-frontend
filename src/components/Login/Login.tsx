@@ -70,10 +70,10 @@ const Login: React.FC = () => {
             {({ errors, touched, handleSubmit }) => (
               <form onSubmit={handleSubmit}>
                 <label>
-                  Username:
+                  Email:
                   <Field type="text" name="email" required />
                   <ErrorMessage
-                    name="username"
+                    name="email"
                     component="div"
                     className="error"
                   />

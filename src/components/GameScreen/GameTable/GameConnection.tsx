@@ -17,9 +17,6 @@ export const stompClient: Client = new Client({
     // }
 });
 
-// Helper function to grab jwt from the local storage
-const jwt = getJwt();
-
 // DOCUMENTATION NEEDED
 export const connectToWebSocket = (playerId:string, setGameState:(state: BlackjackClientGameState)=>void) => {
 
@@ -52,6 +49,7 @@ export const disconnectFromWebSocket = () => {
 
 // DOCUMENTATION NEEDED
 export function joinGame(tableId: string | undefined, playerName: string | null, setPlayerId: (id: string) => void) {
+    const jwt = getJwt();
     const requestConfig: AxiosRequestConfig = {
         headers: {
             Authorization: `Bearer ${jwt}`,
@@ -77,6 +75,7 @@ export function joinGame(tableId: string | undefined, playerName: string | null,
 
 // DOCUMENTATION NEEDED
 export const amIHost = (tableId:string|undefined, playerId:string|undefined, setIsHost:(isHost:boolean)=>void) => {
+    const jwt = getJwt();
     const requestConfig: AxiosRequestConfig = {
         baseURL: `http://${BASE_URL}:${GAME_PORT}`,
         headers: {
@@ -102,6 +101,7 @@ export const amIHost = (tableId:string|undefined, playerId:string|undefined, set
 
 // DOCUMENTATION NEEDED
 export const handleStartGame = (tableId: string | undefined, playerId: string | undefined) => {
+    const jwt = getJwt();
     const requestConfig: AxiosRequestConfig = {
         baseURL: `http://${BASE_URL}:${GAME_PORT}`,
         headers: {
@@ -123,6 +123,7 @@ export const handleStartGame = (tableId: string | undefined, playerId: string | 
 
 // DOCUMENTATION NEEDED
 export const onHitAction = (tableId: string | undefined, playerId: string) => {
+    const jwt = getJwt();
     const requestConfig: AxiosRequestConfig = {
         baseURL: `http://${BASE_URL}:${GAME_PORT}`,
         headers: {
@@ -144,6 +145,7 @@ export const onHitAction = (tableId: string | undefined, playerId: string) => {
 
 // DOCUMENTATION NEEDED
 export const onStandAction = (tableId: string | undefined, playerId: string) => {
+    const jwt = getJwt();
     const requestConfig: AxiosRequestConfig = {
         baseURL: `http://${BASE_URL}:${GAME_PORT}`,
         headers: {
@@ -164,6 +166,7 @@ export const onStandAction = (tableId: string | undefined, playerId: string) => 
 }
 
 export const leaveGame = (tableId: string | undefined, playerId: string) => {
+    const jwt = getJwt();
     const requestConfig: AxiosRequestConfig = {
         baseURL: `http://${BASE_URL}:${GAME_PORT}`,
         headers: {
@@ -182,6 +185,7 @@ export const leaveGame = (tableId: string | undefined, playerId: string) => {
 
 // DOCUMENTATION NEEDED
 export const requestGameState = (tableId: string | undefined, playerId: string) => {
+    const jwt = getJwt();
     const requestConfig: AxiosRequestConfig = {
         baseURL: `http://${BASE_URL}:${GAME_PORT}`,
         headers: {
