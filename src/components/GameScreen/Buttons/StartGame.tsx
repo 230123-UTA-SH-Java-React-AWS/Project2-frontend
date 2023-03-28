@@ -10,7 +10,7 @@ function StartGame({isHost, handleGameStart}:ButtonProps) {
     return (
         <div className="start-game">
             { !isHost
-                ? <h1 className="start-btn">Waiting for Host to Start Game</h1>
+                ? <div className="start-message"><h1>Waiting for Host to Start...</h1></div>
                 : <button className="start-btn game-button" onClick={handleGameStart}>Start Game</button>
             }
         </div>

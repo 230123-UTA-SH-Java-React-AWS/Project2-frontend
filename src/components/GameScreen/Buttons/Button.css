@@ -9,10 +9,10 @@
 }
 
 .disconnect-btn {
-    background-color: #6B0202;
+    background: linear-gradient(#851a1a,#6B0202);
     pointer-events: auto;
 }
 
 .disconnect-btn:hover{
-    background: linear-gradient(#972222,#6B0202);
+    background: linear-gradient(#a82a2a,#6B0202);
 }

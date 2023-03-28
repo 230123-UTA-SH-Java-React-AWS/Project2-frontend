@@ -88,10 +88,10 @@
 	display: grid;
 	grid-template-columns: auto auto;
 
-	margin: 6vh auto;
+	margin: 0 auto;
 }
 
-/* ==========For Each Player================ */
+/* ========== For Each Player ================ */
 
 .player1 {
 	grid-column: 2;
@@ -100,15 +100,15 @@
 	display: grid;
 	grid-template-columns: auto auto;
 
-	margin: 6vh auto;
+	margin: 8vh auto 0;
 }
 
 .player1 .countBox {
-	color: rgba(255, 255, 255, .4);
+	color: rgba(255, 255, 255, .2);
 }
 
 .dealer .countBox {
-	color: rgba(255, 255, 255, .4);
+	color: rgba(255, 255, 255, .2);
 }
 
 .cardSection {
@@ -139,7 +139,7 @@
 	right: 0;
 	
 	text-align: center;
-	font-size: 4vh;
+	font-size: 3vh;
 	font-family: 'Rowdies Regular';
 	color: rgba(255, 255, 255, .2);
 	
@@ -160,20 +160,38 @@
 
 /* =============================== Specific Player Positioning ========================================= */
 
-.player2 {
-	/* bottom left */
-	grid-column: 1;
-	grid-row: 2;
-
+/* ========================= bottom row ========================== */
+.player2, .player3 {
 	display: grid;
 	grid-template-rows: auto auto;
 	grid-template-columns: auto auto;
+	
+	margin: 0 auto;
+	
+	width: 22vw;
 
-	margin: 6vh auto;
+	grid-row: 2;
+}
+
+.player2 {
+	/* bottom left */
+	grid-column: 1;
+}
+
+.player3 {
+	/* bottom right */
+	grid-column: 3;
 }
 
 .player2 > .countContainer {
 	grid-column: 2;
+	grid-row: 1;
+	height: 8vh;
+	width: 10vh;
+}
+
+.player3 > .countContainer {
+	grid-column: 1;
 	grid-row: 1;
 	height: 8vh;
 	width: 10vh;
@@ -185,40 +203,17 @@
 	transform: rotate(45deg);
 }
 
+.player3 > .cardSection {
+	grid-column: 2;
+	grid-row: 2;
+	transform: rotate(-45deg) translateY(-2vh) translateX(6vh);
+}
+
 .player2 > .countContainer > .countBox {
 	top: 0;
 	right: 0;
 	font-size: 2vh;
 	padding: 1vh 2vh;
-}
-
-.player2 > .countContainer > .countBox > .countValue {
-	font-size: 2vh;
-}
-
-.player3 {
-	/* bottom right */
-	grid-column: 3;
-	grid-row: 2;
-
-	display: grid;
-	grid-template-rows: auto auto;
-	grid-template-columns: auto auto;
-
-	margin: 6vh auto;
-}
-
-.player3 > .countContainer {
-	grid-column: 1;
-	grid-row: 1;
-	height: 8vh;
-	width: 10vh;
-}
-
-.player3 > .cardSection {
-	grid-column: 2;
-	grid-row: 2;
-	transform: rotate(-45deg) translateY(-2vh) translateX(6vh);
 }
 
 .player3 > .countContainer > .countBox {
@@ -228,25 +223,44 @@
 	padding: 1vh 2vh;
 }
 
-.player3 > .countContainer > .countBox > .countValue {
+.player2 > .countContainer > .countBox > .countValue, .player3 > .countContainer > .countBox > .countValue {
 	font-size: 2vh;
+	margin-bottom: 1vh;
 }
 
-.player4 {
-	/* top left */
-	grid-column: 1;
+/* ========================= top row ========================== */
+.player4, .player5 {
 	grid-row: 1;
 
-	transform: rotate(90deg) translateX(8vh);
-
 	display: grid;
-	grid-template-rows: auto auto;
 	grid-template-columns: auto auto;
 
 	margin: 0 auto;
+
+	width: 22vw;
+}
+
+.player4 > .countContainer > .countBox > .countValue, .player5 > .countContainer > .countBox > .countValue {
+	font-size: 2vh;
+	margin-bottom: 1vh;
+}
+
+.player4 {
+	/* far left column */
+	grid-column: 1;
+}
+
+.player5 {
+	/* far right column */
+	grid-column: 3;
 }
 
 .player4 > .countContainer {
+	grid-column: 2;
+	height: 25vh;
+}
+
+.player5 > .countContainer {
 	grid-column: 1;
 	grid-row: 1;
 	height: 12vh;
@@ -254,33 +268,26 @@
 
 .player4 > .cardSection {
 	grid-column: 1;
-	grid-row: 2;
+	transform: rotate(90deg) translateX(6vh);
+}
+
+.player5 > .cardSection {
+	grid-column: 2;
+	transform: rotate(-90deg) translateX(-6vh);
 }
 
 .player4 > .countContainer > .countBox {
-	transform: rotate(-90deg);
 	right: 0;
-	top: 0;
+	bottom: 0;
 	font-size: 2vh;
 	padding: 1vh 2vh;
 }
 
-.player4 > .countContainer > .countBox > .countValue {
+.player5 > .countContainer > .countBox {
+	right: 0;
+	top: 0;
 	font-size: 2vh;
-}
-
-.player5 {
-	/* top right */
-	grid-column: 3;
-	grid-row: 1;
-
-	transform: rotate(-90deg);
-
-	display: grid;
-	grid-template-rows: auto auto;
-	grid-template-columns: auto auto;
-
-	margin: 6vh auto;
+	padding: 1vh 2vh;
 }
 
 /* ========== At The Bottom of the Page ================ */
@@ -309,7 +316,7 @@
 	right: 2vw;
 }
 
-/* ============= The Start Game Button ============== */
+/* ============= The Start Game Button / Message ============== */
 
 .start-game {
 	position: relative;
@@ -324,4 +331,33 @@
 	right: 0;
 	margin: 0 auto;
 	width: fit-content;
+}
+
+.start-message {
+	position: absolute;
+	bottom: -4vh;
+	left: 0;
+	right: 0;
+	margin: 0 auto;
+	width: 40vh;
+	white-space: nowrap;
+}
+
+.start-message > h1 {
+	font-family: 'Rowdies Regular';
+	font-weight: 100;
+	font-size: 3vh;
+	color: rgba(255, 255, 255, .2);
+	width: 36.5vh;
+	overflow: hidden;
+	animation: loading-ellipses 3s steps(4, end) infinite forwards;
+}
+
+@keyframes loading-ellipses {
+	0% {
+		width: 36.5vh;
+	}
+	100% {
+		width: 40vh;
+	}
 }
