@@ -16,7 +16,7 @@ const initialState: AuthState = {
   username: null,
   email: null,
   jwt: null,
-  isAuthenticated: !!getJwt(),
+  isAuthenticated: false,
   status: "idle",
   error: null,
 };
@@ -127,6 +127,7 @@ const authSlice = createSlice({
           state.email = action.payload.email;
           state.jwt = action.payload.accessToken;
           state.error = null;
+          state.isAuthenticated = true;
           localStorage.setItem("jwt", action.payload.accessToken);
         }
       })
@@ -148,6 +149,7 @@ const authSlice = createSlice({
           state.email = action.payload.email;
           state.jwt = action.payload.jwt;
           state.error = null;
+          state.isAuthenticated = true;
         }
       })
       .addCase(autoLogin.rejected, (state, action) => {
