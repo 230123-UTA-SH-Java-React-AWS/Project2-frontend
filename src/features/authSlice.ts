@@ -7,7 +7,7 @@ interface AuthState {
   username: string | null;
   email: string | null;
   jwt: string | null;
-  isAuthenticated: boolean;
+  isAuthenticated: boolean | undefined;
   status: "idle" | "loading" | "succeeded" | "failed";
   error: string | null;
 }
@@ -16,7 +16,7 @@ const initialState: AuthState = {
   username: null,
   email: null,
   jwt: null,
-  isAuthenticated: false,
+  isAuthenticated: undefined,
   status: "idle",
   error: null,
 };
@@ -62,6 +62,8 @@ export const loginUser = createAsyncThunk(
 );
 
 export const autoLogin = createAsyncThunk("auth/autoLogin", async () => {
+  console.log("Autologin started");
+  
   const jwt = getJwt();
   if (!jwt) {
     throw new Error("No JWT token found");
@@ -71,6 +73,8 @@ export const autoLogin = createAsyncThunk("auth/autoLogin", async () => {
     const response = await apiClient.get("/auth/user", {
       headers: { Authorization: `Bearer ${jwt}` },
     });
+    console.log("Autologin finishing");
+    
     return { ...response.data, jwt };
   } catch (error) {
     console.log(error);
@@ -84,6 +88,7 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     logoutUser: (state) => {
+      state.isAuthenticated = undefined;
       state.username = null;
       state.email = null;
       state.jwt = null;
@@ -106,12 +111,14 @@ const authSlice = createSlice({
         } else {
           state.status = "succeeded";
           state.error = null;
+          state.isAuthenticated = false;
         }
       })
       .addCase(registerUser.rejected, (state, action) => {
         console.log(action);
         state.status = "failed";
         state.error = action.error.message || null;
+        state.isAuthenticated = false;
       })
       .addCase(loginUser.pending, (state) => {
         state.status = "loading";
@@ -135,6 +142,7 @@ const authSlice = createSlice({
         console.log(action);
         state.status = "failed";
         state.error = action.error.message || null;
+        state.isAuthenticated = false;
       })
       .addCase(autoLogin.pending, (state) => {
         state.status = "loading";
@@ -155,6 +163,7 @@ const authSlice = createSlice({
       .addCase(autoLogin.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message || null;
+        state.isAuthenticated = false;
       });
   },
 });

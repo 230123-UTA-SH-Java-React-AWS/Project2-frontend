@@ -1,17 +1,26 @@
+# Build stage
 FROM node:14.16.0 as build
 WORKDIR /app
 
-#we copy the app to the container
+# Copy the app to the container
 COPY . /app/
 
-#we configure the container to build the react app
+# Configure the container to build the React app
 RUN npm install
 RUN npm run build
 
-#we prepare nginxnpm 
-FROM nginx:1.23.3-alpine
-COPY --from=build /app/build /usr/share/nginx/html
+# Serve stage
+FROM node:14.16.0
+WORKDIR /app
 
-#starts up nginx
-EXPOSE 80 
-CMD [ "nginx","-g", "daemon off;" ]
+# Copy the build folder from the build stage
+COPY --from=build /app/build /app/build
+
+# Install the serve package globally
+RUN npm install -g serve
+
+# Expose the default serve port
+EXPOSE 3000
+
+# Serve the build folder
+CMD ["serve", "-s", "build"]
