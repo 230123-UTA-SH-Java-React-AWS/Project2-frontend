@@ -36,9 +36,9 @@ export const Root = () => {
       {loggedIn !== undefined ? <Routes>
         <Route path="/app" element={loggedIn? <App /> : <Navigate replace to={"/login"}/>}/>
         <Route path='/blackjack/:tableId' element={loggedIn? <Game /> : <Navigate replace to={"/login"}/>} />
-        <Route path="/" element={<Landing />} />
-        <Route path="/registration" element={<Registration />} />
-        <Route path="/login" element={<Login />} />
+        <Route path="/" element={loggedIn? <Navigate replace to={"/app"}/> : <Landing />} />
+        <Route path="/registration" element={loggedIn? <Navigate replace to={"/app"}/> :<Registration />} />
+        <Route path="/login" element={loggedIn? <Navigate replace to={"/app"}/> :<Login />} />
         <Route path="/*" element={loggedIn? <Navigate replace to={"/app"}/> : <Navigate replace to={"/login"}/>}/>
       </Routes> : 
       <Routes>
