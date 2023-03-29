@@ -8,9 +8,6 @@
 # testing
 /coverage
 
-#local environment
-/src/static
-
 # production
 /build
 
