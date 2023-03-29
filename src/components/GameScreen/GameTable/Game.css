@@ -54,7 +54,7 @@
     box-sizing: border-box;
 
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 31vw 32vw 31vw;
 	grid-template-rows: 44vh 44vh;
 }
 
@@ -143,7 +143,6 @@
 
 .countBox {
 	position: absolute;
-	right: 0;
 	
 	text-align: center;
 	font-size: 3vh;
@@ -173,8 +172,6 @@
 	grid-template-rows: auto auto;
 	grid-template-columns: auto auto;
 	
-	margin: 0 auto;
-	
 	width: 22vw;
 
 	grid-row: 2;
@@ -183,25 +180,27 @@
 .player2 {
 	/* bottom left */
 	grid-column: 1;
+	margin: 0 2vw auto auto;
 }
 
 .player3 {
 	/* bottom right */
 	grid-column: 3;
+	margin: 0 auto auto 2vw;
 }
 
 .player2 > .countContainer {
 	grid-column: 2;
 	grid-row: 1;
-	height: 8vh;
-	width: 10vh;
+	height: 10vh;
+	width: 20vh;
 }
 
 .player3 > .countContainer {
 	grid-column: 1;
 	grid-row: 1;
-	height: 8vh;
-	width: 10vh;
+	height: 10vh;
+	width: 20vh;
 }
 
 .player2 > .cardSection {
@@ -224,7 +223,7 @@
 }
 
 .player3 > .countContainer > .countBox {
-	right: 0;
+	left: 0;
 	top: 0;
 	font-size: 2vh;
 	padding: 1vh 2vh;
@@ -255,11 +254,13 @@
 .player4 {
 	/* far left column */
 	grid-column: 1;
+	margin: auto 2vw 6vh auto;
 }
 
 .player5 {
 	/* far right column */
 	grid-column: 3;
+	margin: auto auto 6vh 2vw;
 }
 
 .player4 > .countContainer {
@@ -270,17 +271,17 @@
 .player5 > .countContainer {
 	grid-column: 1;
 	grid-row: 1;
-	height: 12vh;
+	height: 25vh;
 }
 
 .player4 > .cardSection {
 	grid-column: 1;
-	transform: rotate(90deg) translateX(6vh);
+	transform: rotate(135deg) translateX(3vh);
 }
 
 .player5 > .cardSection {
 	grid-column: 2;
-	transform: rotate(-90deg) translateX(-6vh);
+	transform: rotate(-135deg) translateX(3vh);
 }
 
 .player4 > .countContainer > .countBox {
@@ -291,8 +292,8 @@
 }
 
 .player5 > .countContainer > .countBox {
-	right: 0;
-	top: 0;
+	left: 0;
+	bottom: 0;
 	font-size: 2vh;
 	padding: 1vh 2vh;
 }
@@ -370,9 +371,6 @@
 }
 
 @media screen and (orientation: portrait) {
-	.game-screen > * {
-		overflow: hidden;
-	}
 
 	.gameBoard {
 		height: 88vw;
@@ -381,16 +379,40 @@
 		top: calc(50vh - 44vw);
 		left: calc(50vw - 47vh);
 
+		grid-template-columns: 31vh 32vh 31vh;
 		grid-template-rows: 44vw 44vw;
-
-		overflow: hidden;
 
 		transform-origin: center;
 		transform: rotate(-90deg);
 	}
 
-	.gameBoard > * {
+	.dealer {
 		margin: 8vw auto;
+	}
+
+	.cardSection {
+		width: 14vh;
+    	height: 25vw;
+	}
+
+	.player5, .player4 {
+		margin-bottom: 6vw;
+		margin-top: auto;
+	}
+
+	.player2, .player3 {
+		margin-top: 0;
+		margin-bottom: auto;
+	}
+
+	.player2, .player4 {
+		margin-left: auto;
+		margin-right: 2vh;
+	}
+
+	.player3, .player5 {
+		margin-left: 2vh;
+		margin-right: auto;
 	}
 
 	.table-edge {
@@ -422,17 +444,48 @@
 	}
 
 	.start-btn {
-		position: absolute;
-		bottom: -10vw;
-		left: -5vh;
+		margin: 0 auto;
+		bottom: -2vw;
 		width: 15vh;
+	}
+
+	.start-message {
+		bottom: -2vw;
+	}
+
+	.start-message > h1 {
+		font-size: 3vw;
 	}
 
 	.countContainer {
 		width: 20vw;
 	}
 
-	.countBox {
+	.player2 > .countContainer, .player3 > .countContainer {
+		height: 10vw;
+		width: 10vw;
+	}
+
+	.player4 > .countContainer, .player5 > .countContainer {
+		height: 25vw;
+		width: 10vw;
+	}
+
+	.player2, .player3, .player4, .player5 {
+		width: 22vh;
+	}
+
+	.player2 > .countContainer > .countBox, .player3 > .countContainer > .countBox, .player4 > .countContainer > .countBox, .player5 > .countContainer > .countBox {
+		font-size: 1vw;
+		padding: .5vw;
+	}
+
+	.player2 > .countContainer > .countBox > .countValue, .player3 > .countContainer > .countBox > .countValue, .player4 > .countContainer > .countBox > .countValue, .player5 > .countContainer > .countBox > .countValue {
+		margin-bottom: 0;
+	}
+
+	.dealer .countBox, .player1 .countBox {
+		right: 0;
 		font-size: 2vw;
 		padding: 1vw;
 	}
@@ -444,5 +497,14 @@
 	.countValue {
 		font-size: 3vw;
 		font-weight: bold;
+	}
+
+	@keyframes loading-ellipses {
+		0% {
+			width: 36.5vw;
+		}
+		100% {
+			width: 40vw;
+		}
 	}
 }
