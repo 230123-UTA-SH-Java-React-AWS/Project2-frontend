@@ -422,9 +422,10 @@
 	}
 
 	.start-btn {
+		position: absolute;
+		bottom: -10vw;
+		left: -5vh;
 		width: 15vh;
-		transform-origin: center;
-		transform: rotate(-90deg) translateY(-5vw);
 	}
 
 	.countContainer {
@@ -432,16 +433,16 @@
 	}
 
 	.countBox {
-		font-size: 3vw;
-		padding: 2vw;
+		font-size: 2vw;
+		padding: 1vw;
 	}
 	
 	.countLabel {
-		margin: 0 auto 1vw;
+		margin: 0 auto;
 	}
 	
 	.countValue {
-		font-size: 5vw;
+		font-size: 3vw;
 		font-weight: bold;
 	}
 }
