@@ -32,8 +32,14 @@
 }
 
 .gameBoard {
+	position: absolute;
+	
+	top: 6vh;
+	left: 3vw;
+
     height: 88vh;
     width: 94vw;
+
 	background-image: conic-gradient(
 		at 50% -20%,
         #440101,
@@ -41,14 +47,15 @@
         #440101
     );
 	background-clip: border-box;
+
     border-radius: 50vw;
     border: 1px solid #EC9A29;
+
     box-sizing: border-box;
-    margin: 6vh auto;
+
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-	grid-template-rows: 1fr 1fr;
-    padding: 40px;
+	grid-template-rows: 44vh 44vh;
 }
 
 .game-button {
@@ -65,8 +72,8 @@
 
     width: 10vw;
     
-    margin: 4px 2px;
-    padding: 10px 20px;
+    margin: .25vh .25vw;
+    padding: 1.1vh 2vw;
     
     background-color: #e4e4d6;
 
@@ -88,7 +95,7 @@
 	display: grid;
 	grid-template-columns: auto auto;
 
-	margin: 0 auto;
+	margin: 8vh auto;
 }
 
 /* ========== For Each Player ================ */
@@ -359,5 +366,82 @@
 	}
 	100% {
 		width: 40vh;
+	}
+}
+
+@media screen and (orientation: portrait) {
+	.game-screen > * {
+		overflow: hidden;
+	}
+
+	.gameBoard {
+		height: 88vw;
+		width: 94vh;
+
+		top: calc(50vh - 44vw);
+		left: calc(50vw - 47vh);
+
+		grid-template-rows: 44vw 44vw;
+
+		overflow: hidden;
+
+		transform-origin: center;
+		transform: rotate(-90deg);
+	}
+
+	.gameBoard > * {
+		margin: 8vw auto;
+	}
+
+	.table-edge {
+		height: 96vh;
+		width: 92vw;
+		top: 2vh;
+		left: 4vw;
+	}
+
+	.disconnect {
+		left:0;
+		top: 23vh;
+		right: auto;
+		transform-origin: top left;
+		rotate: -90deg;
+	}
+
+	.game-controls {
+		transform: rotate(-90deg) translateX(50vh) translateY(45vw);
+	}
+
+	.game-button {
+		width: 10vh;
+
+		margin: .25vh .25vw;
+    	padding: 1.1vw 1vh;
+
+		font-size: 2vh;
+	}
+
+	.start-btn {
+		width: 15vh;
+		transform-origin: center;
+		transform: rotate(-90deg) translateY(-5vw);
+	}
+
+	.countContainer {
+		width: 20vw;
+	}
+
+	.countBox {
+		font-size: 3vw;
+		padding: 2vw;
+	}
+	
+	.countLabel {
+		margin: 0 auto 1vw;
+	}
+	
+	.countValue {
+		font-size: 5vw;
+		font-weight: bold;
 	}
 }

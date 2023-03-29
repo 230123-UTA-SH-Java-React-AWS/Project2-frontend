@@ -8,3 +8,9 @@
 
     pointer-events: none;
 }
+
+@media screen and (orientation: portrait) {
+    .playing-card > img{
+        height: 25vw;
+    }
+}
