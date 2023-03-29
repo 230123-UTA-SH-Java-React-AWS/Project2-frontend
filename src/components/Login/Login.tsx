@@ -2,10 +2,11 @@ import React, { useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import "./Login.css";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { loginUser } from "../../features/authSlice";
 import { RootState } from "../../redux/store";
+import { FormikErrors, FormikHelpers } from "formik";
 
 interface LoginValues {
   email: string;
@@ -35,21 +36,29 @@ const Login: React.FC = () => {
   const navigate = useNavigate();
   const handleSubmit = async (
     values: LoginValues,
-    { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }
+    { setSubmitting, setErrors }: { setSubmitting: (isSubmitting: boolean) => void, setErrors: (errors: { [field: string]: string}) => void }
   ) => {
     try {
       console.log(`Email: ${values.email}, Password: ${values.password}`);
       const res = await dispatch(loginUser(values)).unwrap();
       if (res.accessToken) {
         // successful login so navigate user here
+        navigate("/App");
       } else {
         // set errors here
         console.log(res);
+
+        setErrors({email: 'Invalid email or password', password: 'Invalid email or password'});
+        
       }
       setSubmitting(false);
+
     } catch (error) {
+
       console.error(error);
-      // set generic error here "Something went wrong with logging in"
+
+      setErrors({_error: 'Something went wrong with logging in'});
+      
       setSubmitting(false);
     }
   };
@@ -64,13 +73,13 @@ const Login: React.FC = () => {
             validationSchema={validationSchema}
             onSubmit={handleSubmit}
           >
-            {({ errors, touched, handleSubmit }) => (
+            {({ errors, touched, handleSubmit, isSubmitting }) => (
               <form onSubmit={handleSubmit}>
                 <label>
-                  Username:
-                  <Field type="text" name="email" required />
+                  Email:
+                  <Field type="text" name="email" /*required*/ />
                   <ErrorMessage
-                    name="username"
+                    name="email"
                     component="div"
                     className="error"
                   />

@@ -7,6 +7,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { registerUser } from "../../features/authSlice";
 import { RootState } from "../../redux/store";
+import axios, { AxiosResponse } from "axios";
 
 interface RegistrationValues {
   email: string;
@@ -16,9 +17,18 @@ interface RegistrationValues {
 
 const alphanumericRegex = /^[a-zA-Z0-9_]*$/;
 
+// const checkEmail = (email: string): Promise<AxiosResponse<{ exists: boolean }>> => {
+//   return axios.get(`http://localhost:8080/api/auth/check-email/${email}`);
+// };
+
 //Yup validation schema to be applied to our formik form
 const validationSchema = Yup.object().shape({
-  email: Yup.string().email("Invalid email").required("email is required"),
+  email: Yup.string().email("Invalid email").required("email is required")
+  .test('unique-email', 'Email is already taken', async (value) => {
+    const response = await axios.get(`http://localhost:8080/api/auth/check-email/${value}`);
+    return !response.data; 
+  }),
+ 
 
   username: Yup.string()
     .min(3, "Username must be at least 3 characters")
@@ -27,7 +37,11 @@ const validationSchema = Yup.object().shape({
       alphanumericRegex,
       "Only alphanumeric characters and underscores are allowed"
     )
-    .required("Username is required"),
+    .required("Username is required")
+    .test('unique-username', 'Username is already taken', async (value) => {
+      const response = await axios.get(`http://localhost:8080/api/auth/check-username/${value}`);
+      return response.data; 
+    }),
 
   password: Yup.string()
     .min(6, "Password must be at least 6 characters")
@@ -69,18 +83,14 @@ const Registration: React.FC = () => {
         // set errors here
         console.log(res);
       } else {
-        // successfully registered so navigate user to login
+        navigate("/Login");
       }
       setSubmitting(false);
     } catch (error) {
       console.error(error);
-      setSubmitting(false);
+      setSubmitting(false);                                                                                                                                                                                                                                                                                                                            
     }
-
-    //Fill w code to send data to the server for adding a new user somewhere in this function
-
-    //Navigate to the new page
-    // navigate("/Login");
+    
   };
 
   return (
@@ -125,7 +135,7 @@ const Registration: React.FC = () => {
                 <label>
                   Confirm Password:
                   <Field
-                    type="passwordConfirmation"
+                    type="password"
                     name="passwordConfirmation"
                     required
                   />
