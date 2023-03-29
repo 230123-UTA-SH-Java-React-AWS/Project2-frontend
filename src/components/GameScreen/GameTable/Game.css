@@ -270,7 +270,7 @@
 .player5 > .countContainer {
 	grid-column: 1;
 	grid-row: 1;
-	height: 12vh;
+	height: 25vh;
 }
 
 .player4 > .cardSection {
@@ -292,7 +292,7 @@
 
 .player5 > .countContainer > .countBox {
 	right: 0;
-	top: 0;
+	bottom: 0;
 	font-size: 2vh;
 	padding: 1vh 2vh;
 }
