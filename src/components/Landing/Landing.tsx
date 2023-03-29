@@ -17,10 +17,10 @@ const Landing: React.FC = () => {
             the fun!
           </h1>
           <ul>
-            <Link to="/Registration" className="button-link">
+            <Link to="/registration" className="button-link">
               <button className="landing-button">Register</button>
             </Link>
-            <Link to="/Login" className="button-link">
+            <Link to="/login" className="button-link">
               <button className="landing-button">Login</button>
             </Link>
           </ul>
