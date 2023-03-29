@@ -5,6 +5,7 @@
 
 .playing-card > img {
     height: 25vh;
+    width: calc(25vh * (5/7));
 
     pointer-events: none;
 }
@@ -12,5 +13,6 @@
 @media screen and (orientation: portrait) {
     .playing-card > img{
         height: 25vw;
+        width: calc(25vw * (5/7));
     }
 }
