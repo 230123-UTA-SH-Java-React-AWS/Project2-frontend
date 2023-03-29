@@ -12,7 +12,7 @@
 
 @media screen and (orientation: portrait) {
     .playing-card > img{
-        height: 25vw;
-        width: calc(25vw * (5/7));
+        height: 20vw;
+        width: calc(20vw * (5/7));
     }
 }
