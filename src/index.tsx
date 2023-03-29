@@ -1,19 +1,9 @@
 import { RootState, store } from "./redux/store";
 
-import React, { useEffect } from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
-import App from "./App";
-import Game from "./components/GameScreen/Game";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import reportWebVitals from "./reportWebVitals";
-import Landing from "./components/Landing/Landing";
-import Registration from "./components/Registration/Registration";
-import Login from "./components/Login/Login";
+import reportWebVitals from './reportWebVitals';
 import { Provider } from "react-redux";
-import { autoLogin } from "./features/authSlice";
-import { fetchCsrfToken } from "./features/csrfSlice";
-import { useAppDispatch, useAppSelector } from "./redux/hooks";
 import { Root } from "./Root";
 
 const root = ReactDOM.createRoot(

@@ -1,0 +1,10 @@
+.playing-card {
+    position: absolute;
+    top: 0;
+}
+
+.playing-card > img {
+    height: 25vh;
+
+    pointer-events: none;
+}

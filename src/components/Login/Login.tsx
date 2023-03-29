@@ -43,7 +43,7 @@ const Login: React.FC = () => {
       const res = await dispatch(loginUser(values)).unwrap();
       if (res.accessToken) {
         // successful login so navigate user here
-        navigate("/App");
+        navigate("/app");
       } else {
         // set errors here
         console.log(res);
@@ -61,8 +61,10 @@ const Login: React.FC = () => {
       
       setSubmitting(false);
     }
+    console.log("testing!")
   };
 
+  
   return (
     <div className="background">
       <div className="container">
@@ -77,7 +79,7 @@ const Login: React.FC = () => {
               <form onSubmit={handleSubmit}>
                 <label>
                   Email:
-                  <Field type="text" name="email" /*required*/ />
+                  <Field type="text" name="email" required />
                   <ErrorMessage
                     name="email"
                     component="div"

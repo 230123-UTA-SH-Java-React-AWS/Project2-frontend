@@ -83,7 +83,12 @@ const Registration: React.FC = () => {
         // set errors here
         console.log(res);
       } else {
+<<<<<<< HEAD
         navigate("/Login");
+=======
+        // successfully registered so navigate user to login
+        navigate("/login");
+>>>>>>> main
       }
       setSubmitting(false);
     } catch (error) {

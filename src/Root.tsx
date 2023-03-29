@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import App from "./App";
-import Game from "./components/GameScreen/Game";
+import Game from "./components/GameScreen/GameTable/Game";
 import Landing from "./components/Landing/Landing";
 import Login from "./components/Login/Login";
 import Registration from "./components/Registration/Registration";
@@ -14,6 +14,7 @@ import { getJwt } from "./util/getJwt";
 export const Root = () => {
   const dispatch = useAppDispatch();
   const csrfToken = useAppSelector((state: RootState) => state.csrf.token);
+  const loggedIn = useAppSelector((state: RootState) => state.auth.isAuthenticated);
 
   useEffect(() => {
     if (!csrfToken) {
@@ -22,18 +23,20 @@ export const Root = () => {
   }, [dispatch, csrfToken]);
 
   useEffect(() => {
-    if (getJwt != null) {
+    if (getJwt() != null) {
       dispatch(autoLogin());
     }
   }, []);
+
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/App" element={<App />} />
-        <Route path="/game" element={<Game />} />
+        <Route path="/app" element={loggedIn? <App /> : <Navigate replace to={"/login"}/>}/>
+        <Route path='/blackjack/:tableId' element={loggedIn? <Game /> : <Navigate replace to={"/login"}/>} />
         <Route path="/" element={<Landing />} />
-        <Route path="/Registration" element={<Registration />} />
-        <Route path="/Login" element={<Login />} />
+        <Route path="/registration" element={<Registration />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/*" element={loggedIn? <Navigate replace to={"/app"}/> : <Navigate replace to={"/login"}/>}/>
       </Routes>
     </BrowserRouter>
   );

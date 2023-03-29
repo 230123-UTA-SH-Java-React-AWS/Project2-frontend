@@ -1,9 +1,7 @@
-import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { getJwt } from "../util/getJwt";
-import { RootState } from "../redux/store";
-import axios, { AxiosError } from "axios";
+import { AxiosError } from "axios";
 import apiClient from "../util/apiClient";
-import { act } from "react-dom/test-utils";
 
 interface AuthState {
   username: string | null;
@@ -18,7 +16,7 @@ const initialState: AuthState = {
   username: null,
   email: null,
   jwt: null,
-  isAuthenticated: !!getJwt(),
+  isAuthenticated: false,
   status: "idle",
   error: null,
 };
@@ -73,7 +71,6 @@ export const autoLogin = createAsyncThunk("auth/autoLogin", async () => {
     const response = await apiClient.get("/auth/user", {
       headers: { Authorization: `Bearer ${jwt}` },
     });
-    console.log(response);
     return { ...response.data, jwt };
   } catch (error) {
     console.log(error);
@@ -130,6 +127,7 @@ const authSlice = createSlice({
           state.email = action.payload.email;
           state.jwt = action.payload.accessToken;
           state.error = null;
+          state.isAuthenticated = true;
           localStorage.setItem("jwt", action.payload.accessToken);
         }
       })
@@ -142,7 +140,6 @@ const authSlice = createSlice({
         state.status = "loading";
       })
       .addCase(autoLogin.fulfilled, (state, action) => {
-        console.log(action);
         if (action.payload.httpStatus) {
           state.status = "failed";
           state.error = action.payload;
@@ -152,6 +149,7 @@ const authSlice = createSlice({
           state.email = action.payload.email;
           state.jwt = action.payload.jwt;
           state.error = null;
+          state.isAuthenticated = true;
         }
       })
       .addCase(autoLogin.rejected, (state, action) => {

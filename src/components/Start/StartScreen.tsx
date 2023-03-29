@@ -1,39 +1,48 @@
-import "./StartScreen.css"; 
-import { Link } from "react-router-dom";
+import "./StartScreen.css";
+import TableList from "./TableList";
 import { useState } from "react";
+import CreateNewGameForm from "../CreateNewGame/CreateGame";
+import { logoutUser } from "../../features/authSlice";
+import { useAppDispatch } from "../../redux/hooks";
+import { useNavigate } from "react-router-dom";
+
 
 
 function StartScreen() {
-    
-    /* At a later time, add redirects for other game choices 
-    When game starts, will need to generate a way to have others join an existing game */
+    // Toggles whether display is showing existing tables or form for creating a new one
+    const [openNewTable, setOpenNewTable] = useState(false);
 
-    /*interface Lobby {
-        gameId: number; 
+    const handleButton = () => {
+        setOpenNewTable(!openNewTable);
     }
 
-    const [state, setState] = useState({
-        gameLobbies: [{
-            gameId: 0
-        }]
-    }); 
+    const dispatch = useAppDispatch();
+    const navigate = useNavigate(); 
 
-    
-    const loadExistingLobbies() {
-        
-    }; */
+    const logout = () => {
+        dispatch(logoutUser()); 
+        navigate("/login"); 
+    }
 
-    return (<div className="beans">
-        <h1 className="start-h1">Shuffle the deck...</h1>
-    <div className="grid-container">
-        <div className="grid-item">LOBBY 1</div>
-        <Link to="/game"><button className="start-button">START GAME</button></Link>
-        <div className="grid-item">LOBBY 2</div>
-        <Link to="/game"><button className="start-button">JOIN LOBBY</button></Link>
-        <div className="grid-item">LOBBY 3</div>
-        <Link to="/game"><button className="start-button">JOIN LOBBY</button></Link>
-    </div>
-    </div>)
+
+    return (
+        <div className="bg">
+            <nav className="logout"><button id="logout-btn" onClick={logout}>Logout</button></nav>
+            <div className="grid-container beans">
+                <div className="start-title grid-item">
+                    <h1 className="start-h1">Live Tables</h1>
+                </div>
+                <div className="new-game-btn grid-item"><button onClick={handleButton} className="new-game-btn">
+                    {openNewTable ? "CHOOSE EXISTING TABLE" : "CREATE NEW TABLE"}
+                    </button>
+                </div>
+                <div className="menu-container grid-item">
+                    {openNewTable ? <CreateNewGameForm/> : <TableList />}
+                </div>
+
+            </div>
+        </div>
+    )
 }
 
 export default StartScreen;
