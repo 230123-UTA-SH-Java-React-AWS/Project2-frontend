@@ -11,7 +11,7 @@ import Dealer from '../Players/Dealer';
 import Player from '../Players/Player';
 import './Game.css';
 import LoadScreen from '../LoadScreen/LoadScreen';
-import { amIHost, connectToWebSocket, disconnectFromWebSocket, handleStartGame, joinGame, leaveGame, onHitAction, onStandAction, requestGameState } from './GameConnection';
+import { amIHost, connectToWebSocket, disconnectFromWebSocket, handleStartGame, joinGame, leaveGame, onHitAction, onStandAction } from './GameConnection';
 
 // This component renders the BlackJack Game
 const Game = () => {
@@ -110,9 +110,6 @@ const Game = () => {
     if(thisPlayer == undefined || gameState == undefined) return;
     setPlayerList(orderPlayerList(thisPlayer, gameState.players))
     setIsHost(thisPlayer.host);
-    if(thisPlayer.endGameState == "STILL_PLAYING" && thisPlayer.handValue == 21){
-      requestGameState(tableId, playerId);
-    }
     //console.log("thisPlayerIsHost?: ", thisPlayer.host);
   }, [thisPlayer])
 

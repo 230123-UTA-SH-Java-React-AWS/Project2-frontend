@@ -5,6 +5,7 @@ import Game from "./components/GameScreen/GameTable/Game";
 import Landing from "./components/Landing/Landing";
 import Login from "./components/Login/Login";
 import Registration from "./components/Registration/Registration";
+import UndefLoadScreen from "./components/UndefinedLoginScreen/UndefLoadScreen";
 import { autoLogin } from "./features/authSlice";
 import { fetchCsrfToken } from "./features/csrfSlice";
 import { useAppDispatch, useAppSelector } from "./redux/hooks";
@@ -28,16 +29,25 @@ export const Root = () => {
     }
   }, []);
 
+  console.log("This component now exists");
+  
   return (
     <BrowserRouter>
-      <Routes>
+      {loggedIn !== undefined ? <Routes>
         <Route path="/app" element={loggedIn? <App /> : <Navigate replace to={"/login"}/>}/>
         <Route path='/blackjack/:tableId' element={loggedIn? <Game /> : <Navigate replace to={"/login"}/>} />
         <Route path="/" element={<Landing />} />
         <Route path="/registration" element={<Registration />} />
         <Route path="/login" element={<Login />} />
         <Route path="/*" element={loggedIn? <Navigate replace to={"/app"}/> : <Navigate replace to={"/login"}/>}/>
+      </Routes> : 
+      <Routes>
+        <Route path="/" element={<Landing />} />
+        <Route path="/registration" element={<Registration />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/*" element={<UndefLoadScreen />}/>
       </Routes>
+      }
     </BrowserRouter>
   );
 };

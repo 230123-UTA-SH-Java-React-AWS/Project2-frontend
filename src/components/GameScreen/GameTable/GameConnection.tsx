@@ -182,24 +182,3 @@ export const leaveGame = (tableId: string | undefined, playerId: string) => {
     lobbyClient.delete(PATH, requestConfig)
         .catch((err) => console.log(err));
 }
-
-// DOCUMENTATION NEEDED
-export const requestGameState = (tableId: string | undefined, playerId: string) => {
-    const jwt = getJwt();
-    const requestConfig: AxiosRequestConfig = {
-        baseURL: `http://${BASE_URL}:${GAME_PORT}`,
-        headers: {
-            Authorization: `Bearer ${jwt}`,
-            'gameId': tableId,
-            'playerId': playerId,
-            'Content-Type': 'application/json'
-        }
-    }
-
-    const PATH = '/requestGameState';
-
-    lobbyClient.put(PATH, {
-        tableId
-    }, requestConfig)
-        .catch((err) => console.log(err));
-}
