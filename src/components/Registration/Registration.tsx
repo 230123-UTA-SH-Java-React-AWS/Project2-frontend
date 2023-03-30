@@ -60,7 +60,6 @@ const Registration: React.FC = () => {
   const dispatch = useAppDispatch();
 
   const auth = useAppSelector((state: RootState) => state.auth);
-  console.log(auth);
 
   const initialValues: RegistrationValues = {
     email: "",
@@ -74,14 +73,11 @@ const Registration: React.FC = () => {
     { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }
   ) => {
     try {
-      console.log(
-        `Email: ${values.email}, Username: ${values.username}, Password: ${values.password}`
-      );
       const res = await dispatch(registerUser(values)).unwrap();
 
-      if (res.httpStatus) {
+      if (res.httpStatus > 299 || res.httpStatus < 200) {
         // set errors here
-        console.log(res);
+        console.error(res);
       } else {
         // successfully registered so navigate user to login
         navigate("/login");

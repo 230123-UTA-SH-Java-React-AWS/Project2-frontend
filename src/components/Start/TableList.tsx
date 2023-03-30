@@ -39,7 +39,7 @@ function TableList() {
             setGames(tableList);
             dispatch(loadTablesSuccess(tableList));
         })
-        .catch( (err) => console.log(err));
+        .catch( (err) => console.error(err));
         
     }
 
@@ -49,7 +49,6 @@ function TableList() {
 
     useEffect(() => {
         loadAllTables();
-        games?.map((game: GameRepresentation) => console.log(game))
     }, []);
 
     return (

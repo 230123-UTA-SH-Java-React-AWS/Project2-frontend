@@ -28,8 +28,6 @@ export const Root = () => {
       dispatch(autoLogin());
     }
   }, []);
-
-  console.log("This component now exists");
   
   return (
     <BrowserRouter>
