@@ -29,7 +29,6 @@ const validationSchema = Yup.object().shape({
     const response = await axios.get(`http://${BASE_URL}:${GAME_PORT}/api/auth/check-email/${value}`);
     return !response.data; 
   }),
- 
 
   username: Yup.string()
     .min(3, "Username must be at least 3 characters")
