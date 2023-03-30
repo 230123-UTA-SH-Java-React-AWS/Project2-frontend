@@ -8,6 +8,7 @@ import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { registerUser } from "../../features/authSlice";
 import { RootState } from "../../redux/store";
 import axios, { AxiosResponse } from "axios";
+import { BASE_URL, GAME_PORT } from "../../static/defaults";
 
 interface RegistrationValues {
   email: string;
@@ -25,7 +26,7 @@ const alphanumericRegex = /^[a-zA-Z0-9_]*$/;
 const validationSchema = Yup.object().shape({
   email: Yup.string().email("Invalid email").required("email is required")
   .test('unique-email', 'Email is already taken', async (value) => {
-    const response = await axios.get(`http://localhost:4798/api/auth/check-email/${value}`);
+    const response = await axios.get(`http://${BASE_URL}:${GAME_PORT}/api/auth/check-email/${value}`);
     return !response.data; 
   }),
  
@@ -39,7 +40,7 @@ const validationSchema = Yup.object().shape({
     )
     .required("Username is required")
     .test('unique-username', 'Username is already taken', async (value) => {
-      const response = await axios.get(`http://localhost:4798/api/auth/check-username/${value}`);
+      const response = await axios.get(`http://${BASE_URL}:${GAME_PORT}/api/auth/check-username/${value}`);
       return response.data; 
     }),
 
