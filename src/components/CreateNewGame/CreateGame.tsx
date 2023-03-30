@@ -34,7 +34,7 @@ function CreateNewGameForm() {
         .then((res) => {
             navigate('/' + 'blackjack' + '/' + res.data);
         })
-        .catch( (err) => console.log("Error:" + err));
+        .catch( (err) => console.error("Error:" + err));
     }
 
     return (

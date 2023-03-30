@@ -39,7 +39,7 @@ export const registerUser = createAsyncThunk(
       const response = await apiClient.post("/auth/register", payload);
       return response.data;
     } catch (error) {
-      console.log(error);
+      console.error(error);
       const err = error as AxiosError;
       return err.response?.data;
     }
@@ -51,10 +51,8 @@ export const loginUser = createAsyncThunk(
   async (payload: LoginPayload) => {
     try {
       const response = await apiClient.post("/auth/login", payload);
-      console.log(response);
       return response.data;
     } catch (error) {
-      console.log(error);
       const err = error as AxiosError;
       return err.response?.data;
     }
@@ -62,7 +60,6 @@ export const loginUser = createAsyncThunk(
 );
 
 export const autoLogin = createAsyncThunk("auth/autoLogin", async () => {
-  console.log("Autologin started");
   
   const jwt = getJwt();
   if (!jwt) {
@@ -73,11 +70,9 @@ export const autoLogin = createAsyncThunk("auth/autoLogin", async () => {
     const response = await apiClient.get("/auth/user", {
       headers: { Authorization: `Bearer ${jwt}` },
     });
-    console.log("Autologin finishing");
     
     return { ...response.data, jwt };
   } catch (error) {
-    console.log(error);
     const err = error as AxiosError;
     return err.response?.data;
   }
@@ -103,7 +98,6 @@ const authSlice = createSlice({
         state.status = "loading";
       })
       .addCase(registerUser.fulfilled, (state, action) => {
-        console.log(action);
 
         if (action.payload.httpStatus) {
           state.status = "failed";
@@ -115,7 +109,6 @@ const authSlice = createSlice({
         }
       })
       .addCase(registerUser.rejected, (state, action) => {
-        console.log(action);
         state.status = "failed";
         state.error = action.error.message || null;
         state.isAuthenticated = false;
@@ -124,7 +117,6 @@ const authSlice = createSlice({
         state.status = "loading";
       })
       .addCase(loginUser.fulfilled, (state, action) => {
-        console.log(action);
         if (action.payload.httpStatus) {
           state.status = "failed";
           state.error = action.payload;
@@ -139,7 +131,6 @@ const authSlice = createSlice({
         }
       })
       .addCase(loginUser.rejected, (state, action) => {
-        console.log(action);
         state.status = "failed";
         state.error = action.error.message || null;
         state.isAuthenticated = false;

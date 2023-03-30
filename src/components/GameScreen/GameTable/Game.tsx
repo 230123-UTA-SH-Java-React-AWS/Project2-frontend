@@ -98,7 +98,6 @@ const Game = () => {
 
   // Updates the local state when gameState changes come from the websocket
   useEffect(() => {
-    console.log(gameState);
     if(gameState == undefined ) return;
     setThisPlayer(gameState.players.find(player => player.playerName == username));
     amIHost(tableId, playerId, setIsHost); //<--- Assuming a player disconnecting is a game state change, checks whether host player has changed
@@ -110,7 +109,6 @@ const Game = () => {
     if(thisPlayer == undefined || gameState == undefined) return;
     setPlayerList(orderPlayerList(thisPlayer, gameState.players))
     setIsHost(thisPlayer.host);
-    //console.log("thisPlayerIsHost?: ", thisPlayer.host);
   }, [thisPlayer])
 
   // Leaves the game whenever we exit the page

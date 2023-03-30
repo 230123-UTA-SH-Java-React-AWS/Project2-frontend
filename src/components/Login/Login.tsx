@@ -26,7 +26,6 @@ const Login: React.FC = () => {
   const dispatch = useAppDispatch();
 
   const auth = useAppSelector((state: RootState) => state.auth);
-  console.log(auth);
 
   const initialValues: LoginValues = {
     email: "",
@@ -39,15 +38,11 @@ const Login: React.FC = () => {
     { setSubmitting, setErrors }: { setSubmitting: (isSubmitting: boolean) => void, setErrors: (errors: { [field: string]: string}) => void }
   ) => {
     try {
-      console.log(`Email: ${values.email}, Password: ${values.password}`);
       const res = await dispatch(loginUser(values)).unwrap();
       if (res.accessToken) {
         // successful login so navigate user here
         navigate("/app");
       } else {
-        // set errors here
-        console.log(res);
-
         setErrors({email: 'Invalid email or password', password: 'Invalid email or password'});
         
       }
@@ -61,7 +56,6 @@ const Login: React.FC = () => {
       
       setSubmitting(false);
     }
-    console.log("testing!")
   };
 
   
